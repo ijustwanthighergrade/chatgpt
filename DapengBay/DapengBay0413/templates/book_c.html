@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>預約旅遊</title>
+</head>
+<body>
+    <header>預約旅遊</header>
+    <form method="POST" action="/book_c/">
+        {% csrf_token %}
+        <label for="num_people">請選擇人數：</label>
+        <select name="num_people" id="num_people">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

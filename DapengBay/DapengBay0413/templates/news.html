@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>行程介紹</title>
+	<meta charset="UTF-8">
+	<style>
+		img {
+			width: 50%;
+			height: auto;
+			float: left;
+			margin-right: 20px;
+			margin-bottom: 20px;
+		}
+	</style>
+{%load static%}
+</head>
+<body>
+	<h1>行程介紹</h1>
+	<img src="../static/images/sailing.jpg" alt="帆船照片">
+	<p>行程資訊：這是一個放鬆的帆船旅行，全程約三天兩夜，出發地點為臺北市，沿著北海岸航行到基隆市，期間將有豐富的活動，包括游泳、野餐、海釣等等，詳細資訊請參考以下行程表：</p>
+	
+	<table>
+		<tr>
+			<th>日期</th>
+			<th>行程</th>
+		</tr>
+		<tr>
+			<td>第一天</td>
+			<td>臺北出發，航行至基隆，晚上在基隆港停泊</td>
+		</tr>
+		<tr>
+			<td>第二天</td>
+			<td>前往外木山海岸，進行游泳和野餐活動</td>
+		</tr>
+		<tr>
+			<td>第三天</td>
+			<td>返回臺北，途中進行海釣活動，抵達臺北後結束行程</td>
+		</tr>
+	</table>
+	 <a  class="button" href="{% url 'reserve'%}">點我開始預約</a>
+</body>
+</html>

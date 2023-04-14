@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    {%load static%}
+</head>
+
+<body>
+    {% extends 'base.html' %}
+{% block content %}
+  <h1>結帳</h1>
+  <div class="checkout-details">
+    <h2>訂單明細</h2>
+    <ul>
+      <li>預約時間：{{travel_date}}</li>
+      <li>人數：{{ reservation.num_people }}</li>
+      <li>餐點需求：{{ reservation.special_requests }}</li>
+      <li>備註：{{ reservation.notes }}</li>
+    </ul>
+    <div class="checkout-amount">
+      <h2>金額</h2>
+      <p>共 15000 元</p>
+      <h2>付款方式</h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="radio" name="payment_method" value="credit_card" checked> 刷卡<br>
+        <input type="radio" name="payment_method" value="bank_transfer"> 匯款<br>
+        <button type="submit">結帳</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+</body>
+</html>

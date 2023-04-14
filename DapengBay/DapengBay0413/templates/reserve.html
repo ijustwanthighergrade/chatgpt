@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+{%load static%}
+</head>
+<body>
+
+	<label for="meeting-time">Choose a time for your appointment:</label>
+<p>
+	<h1>Select a date and time:</h1>
+	
+    <form action="/save/" method='POST'>
+		{% csrf_token %}
+		{% now "Y-m-d" as today %}
+		<input type='date' id='meeting-time' name='meeting-time' value='{{ today }}' min='{{ today }}' max='2030-12-30'>
+		<button type='submit'>Submit</button>
+	  </form>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>孔家小館</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            flex: 1;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .item-price {
+            width: 100px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: right;
+            margin-right: 1.5rem;
+        }
+
+        .quantity {
+            width: 50px;
+            margin-left: 1.5rem;
+            text-align: center;
+        }
+
+        .item-quantity {
+            width: 50px;
+            text-align: center;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="/dinner" style="text-align: center;">孔家小館菜單</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/snacks">小吃</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/noodles">麵飯</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/hotdishes">熱炒</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <form id="order-form" action="" method="GET">
+        {% csrf_token %}
+    <div class="container" style="margin-top: 60px;">
+        {% for item in menu_items %}
+        {% if item.lunch_items %}
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="menu-item" data-item="{{ item.lunch_items }}">
+                    <div class="item-name">{{ item.lunch_name }}</div>
+                    <div class="item-price">{{ item.lunch_price }}元</div>
+                    <div class="quantity-control">
+                        <button class="btn btn-primary btn-sm quantity" data-action="minus">-</button>
+                        <span class="item-quantity">0</span>
+                        <button class="btn btn-primary btn-sm quantity" data-action="plus">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if item.dinner_items %}
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="menu-item" data-item="{{ item.dinner_items }}">
+                    <div class="item-name">{{ item.dinner_name }}</div>
+                    <div class="item-size">{{ item.dinner_size }}</div>
+                    <div class="item-price">{{ item.dinner_price }}元</div>
+                    <div class="quantity-control">
+                        <button class="btn btn-primary btn-sm quantity" data-action="minus">-</button>
+                        <span class="item-quantity">0</span>
+                        <button class="btn btn-primary btn-sm quantity" data-action="plus">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="total">總金額：0元</div>
+    <button type="submit">確認送出</button>
+    </form>
+    <script>
+        $(document).ready(function () {
+    var total = 0;
+    $('.quantity').on('click', function () {
+        var item = $(this).closest('.menu-item').data('item');
+        var action = $(this).data('action');
+        var price = parseInt($('.menu-item[data-item="' + item + '"] .item-price').text()
+            .replace("元", ""));
+        var quantity = parseInt($('.menu-item[data-item="' + item + '"] .item-quantity')
+            .text());
+        if (action === 'minus' && quantity > 0) {  // 檢查數量是否為 0
+            quantity--;
+            total -= price;
+        } else if (action === 'plus') {
+            quantity++;
+            total += price;
+        }
+        $('.menu-item[data-item="' + item + '"] .item-quantity').text(quantity);
+        $('.total').text('總金額：' + Math.max(0, total) + '元');  // 取最大值避免變成負的
+    });
+});
+        $('.quantity').on('click', function (event) {
+            event.preventDefault();
+            // your code here
+        });
+    </script>
+</body>
+
+</html>

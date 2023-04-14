@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>孔家小館</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/static/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .item-name {
+            width: 30%;
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 40px;
+            /* 设置相同的高度以垂直对齐 */
+        }
+
+        .item-price {
+            width: 20%;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: right;
+            margin-right: 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 40px;
+        }
+
+        .quantity-control {
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .quantity {
+            width: 40px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .item-quantity {
+            width: 50px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .btn {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu-header" style="text-align: center; font-size: 30px;">
+            圓之家
+        </div>
+        <form id="order-form" action="/submit_order/" method="POST" style="margin: auto;">
+            {% csrf_token %}
+            <div class="container" style="margin-top: 60px;">
+                {% for item in menu_items %}
+                <div class="row">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <div class="menu-item" data-item="{{ item.breakfast_name }}">
+                            <div class="item-name">{{ item.breakfast_name }}</div>
+                            <div class="item-price">{{ item.breakfast_price }}元</div>
+                            <div class="quantity-control">
+                                <button class="btn btn-primary btn-sm quantity" data-action="minus">-</button>
+                                <span class="item-quantity">0</span>
+                                <button class="btn btn-primary btn-sm quantity" data-action="plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="total" style="text-align: center;">總金額：0元</div>
+                <div style="text-align: center;"><button type="submit" class="btn btn-primary">確認送出</button></div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var order_items = {};
+
+            $('.quantity').on('click', function () {
+                var item = $(this).closest('.menu-item').data('item');
+                var action = $(this).data('action');
+                var price = parseInt($('.menu-item[data-item="' + item + '"] .item-price').text()
+                    .replace("元", ""));
+                var quantity = parseInt($('.menu-item[data-item="' + item + '"] .item-quantity')
+                    .text());
+                if (action === 'minus' && quantity > 0) {
+                    quantity--;
+                } else if (action === 'plus') {
+                    quantity++;
+                }
+                $('.menu-item[data-item="' + item + '"] .item-quantity').text(quantity);
+                order_items[item] = {
+                    'item_price': price,
+                    'item_quantity': quantity
+                };
+                var total = 0;
+                Object.keys(order_items).forEach(function (key) {
+                    var item_price = order_items[key]['item_price'];
+                    var item_quantity = order_items[key]['item_quantity'];
+                    var subtotal = item_price * item_quantity;
+                    total += subtotal;
+                });
+                $('.total').text('總金額：' + Math.max(0, total) + '元');
+                return false;
+            });
+
+            $('#order-form').submit(function (event) {
+                event.preventDefault();
+                // 将 order_items 和总金额加入 POST 请求
+                var total_price = $('.total').text().replace("總金額：", "").replace("元", "");
+                $.post('/submit_order/', {
+                    order_items: JSON.stringify(order_items),
+                    total_price: total_price,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, function (data) {
+                    if (data.success) {
+                        alert('訂單已送出，訂單編號為 ' + data.order_id);
+                        window.location.href = '/dinner/';
+                    } else {
+                        alert('訂單送出失敗');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
