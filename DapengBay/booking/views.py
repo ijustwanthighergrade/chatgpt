@@ -6,6 +6,9 @@ import requests
 
 from booking.models import member
 from booking.models import sign_in
+from booking.models import travel
+from booking.models import breakfast
+from booking.models import Dinner
 from .models import participate
 
 def login(request):
@@ -79,9 +82,6 @@ def delete_person(request, person_id):
     person.delete()
     return redirect('list_persons')
 
-def edit1(request):
-    member = member.objects.get(account=id)
-    return render(request, 'edit.html', {'member': member})
 
 def home(request):
     if 'account' in request.session:
@@ -98,3 +98,14 @@ def logout(request):
     else:
         return render(request, 'login.html')
     
+def edit1(request):
+    amember=""
+    atravel=""
+    if 'account' in request.session:
+        id = request.session['account']
+        if request.method == "GET":
+            amember = member.objects.get(Email=id)
+            atravel = travel.objects.get(id=0)
+        return render(request, 'edit.html', {'amember': amember,'atravel': atravel})
+    else:
+        return render(request, 'login.html')

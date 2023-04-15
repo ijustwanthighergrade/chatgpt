@@ -128,6 +128,16 @@
 			font-size: 16px;
 			margin-left: 10px;
     }
+    a {
+  text-decoration: none; /* 移除底線 */
+  color: inherit; /* 繼承文字顏色 */
+}
+
+a:hover, a:focus {
+  color: inherit; /* 繼承文字顏色，保持不變色 */
+  outline: none; /* 移除聚焦時的默認外框 */
+}
+
 	</style>
 </head>
 <body>
@@ -136,22 +146,9 @@
 			<div>前台預訂</div>
 			<button onclick="location.href='http://127.0.0.1:8000/logout'" class="logout-btn">Log-Out</button>
 		</div>
-        <div class="calendar">
-            <div class="month">
-                <button id="prev-month-btn">←</button>
-                <span id="current-month-year"></span>
-                <button id="next-month-btn">→</button>
-            </div>
-            <div class="days">
-                <div class="day">Sun</div>
-                <div class="day">Mon</div>
-                <div class="day">Tue</div>
-                <div class="day">Wed</div>
-                <div class="day">Thu</div>
-                <div class="day">Fri</div>
-                <div class="day">Sat</div>
-            </div>
-        </div>
+    <form action="/predict" method="post">
+      選擇日期：　
+    <input type="date" id="select-date">
 		<div class="sidebar">
 			<div class="detail">Detail：<br>旅程名稱：帆船快樂遊</div>
 				<div class="people">人員名單</div>
@@ -159,10 +156,11 @@
 				<div class="dinner">晚餐</div>
 		</div>
 		<div class="footer">
-			<div class="member">會員編號</div>
-			<input type="submit" class="order-btn" name="order" value="order">
-      <input type="button" class="edit-btn" value="Edit">
+			<div class="member">{{會員編號}}</div>
+      <input type="submit" class="order-btn" name="travel" value="下訂" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
+      <input type="button" class="edit-btn" name="edit" value="edit" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
 		</div>
+  </form>
 	</div>
     <script>
         const currentMonthYearElem = document.getElementById('current-month-year');
