@@ -132,11 +132,25 @@ def logout(request):
 def edit1(request):
     amember=""
     atravel=""
+    aparticipate=""
     if 'account' in request.session:
         id = request.session['account']
         if request.method == "GET":
             amember = member.objects.get(Email=id)
-            atravel = travel.objects.get(id=0)
-        return render(request, 'edit.html', {'amember': amember,'atravel': atravel})
+            atravel = travel.objects.all()
+            aparticipate = participate.objects.all()
+            num=participate.objects.count()
+
+        return render(request, 'edit.html', {'amember': amember,'atravel': atravel,'aparticipate':aparticipate,'num':num})
     else:
         return render(request, 'login.html')
+def delete_edit(request):
+    person = participate.objects.all()
+    person.delete()
+    travel_de = travel.objects.all()
+    travel_de.delete()
+    breakfast_de = breakfast.objects.all()
+    breakfast_de.delete()
+    dinner_de = Dinner.objects.all()
+    dinner_de.delete()
+    return redirect('edit')
