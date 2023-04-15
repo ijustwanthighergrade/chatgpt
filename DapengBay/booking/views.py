@@ -62,6 +62,14 @@ def add_person(request):
             num=participate.objects.count()
     return render(request, 'list_persons.html',locals())
 
+def complete(request):
+    if 'account' in request.session:
+        if request.method == "GET":
+            id = request.GET.get('id')
+        return render(request, 'complete.html',locals())
+    else:
+        return render(request, 'login.html')
+
 def list_persons(request):
     persons = participate.objects.all()
     return render(request, 'list_persons.html', {'persons': persons})
