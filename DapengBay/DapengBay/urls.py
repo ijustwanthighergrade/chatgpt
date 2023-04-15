@@ -27,11 +27,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from booking import urls as book_urls
-
+from django.urls import path
+from booking.views import add_person, delete_person
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include(book_urls)),
-    
+    path('list', add_person, name='list_persons'),
     
 ]
 

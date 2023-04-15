@@ -6,6 +6,7 @@ import requests
 
 from booking.models import member
 from booking.models import sign_in
+from .models import participate
 
 def login(request):
     if request.method == 'POST':
@@ -33,3 +34,20 @@ def register(request):
     password=request.POST['password']
     password=request.POST['password']
     password=request.POST['password']
+def add_person(request):
+    if participate.objects.count() >= 6:
+        return render(request, 'exceed.html')
+    if request.method == "GET":
+            name = request.GET.get('name')
+            mid = request.GET.get('mid')
+            birth = request.GET.get('birthday')
+            insurance = request.GET.get('insurance_status')
+            new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
+            new_person.save()
+            persons = participate.objects.all()
+    return render(request, 'list_persons.html',locals())
+
+def delete_person(request, person_id):
+    person = participate.objects.get(id=person_id)
+    person.delete()
+    return redirect('list_persons')

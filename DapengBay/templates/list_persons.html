@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Person</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>報名參加</h1>
+      <form method="GET" action="{% url 'add_person' %}">
+        <div class="form-group">
+          <label for="name">姓名:</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="id">身分證字號:</label>
+          <input type="text" class="form-control" id="mid" name="mid" required>
+        </div>
+        <div class="form-group">
+          <label for="birthday">出生日期:</label>
+          <input type="date" class="form-control" id="birthday" name="birthday" required>
+        </div>
+        <div class="form-group">
+          <label for="insurance_status">是否已投保:</label>
+          <select class="form-control" id="insurance_status" name="insurance_status">
+            <option value="已投保">Yes</option>
+            <option value="未投保">No</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">新增</button>
+      </form>
+      <hr>
+
+      <h1>參加名單</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>名字</th>
+            <th>身分證字號</th>
+            <th>生日</th>
+            <th>保險狀態</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in persons %}
+      <tr>
+        <td>{{ p.Name }}</td>
+        <td>{{ p.MID }}</td>
+        <td>{{ p.birthday }}</td>
+        <td>{{ p.insurance_status }}</td>
+        <td>
+          <form method="POST" action="{% url 'delete_person' p.id %}">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="刪除">
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No data</td>
+      </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ </html>
