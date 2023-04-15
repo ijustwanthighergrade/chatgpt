@@ -52,23 +52,26 @@ def register(request):
 
 
 def add_person(request):
-    if participate.objects.count() >= 6:
-        return render(request, 'exceed.html')
-    if request.method == "GET":
-            message = ''
-            name = request.GET.get('name')
-            mid = request.GET.get('mid')
-            birth = request.GET.get('birthday')
-            insurance = request.GET.get('insurance_status')
-            if participate.objects.filter(MID=mid).exists():
-                message = '身分證已存在，請輸入不同的身分證。'
-                return redirect('list_persons')
-            else:
-                new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
-                new_person.save()
-            persons = participate.objects.all()
-            num=participate.objects.count()
-    return render(request, 'list_persons.html',locals())
+    if 'account' in request.session:
+        if participate.objects.count() >= 6:
+            return render(request, 'exceed.html')
+        if request.method == "GET":
+                message = ''
+                name = request.GET.get('name')
+                mid = request.GET.get('mid')
+                birth = request.GET.get('birthday')
+                insurance = request.GET.get('insurance_status')
+                if participate.objects.filter(MID=mid).exists():
+                    message = '身分證已存在，請輸入不同的身分證。'
+                    return redirect('list_persons')
+                else:
+                    new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
+                    new_person.save()
+                persons = participate.objects.all()
+                num=participate.objects.count()
+        return render(request, 'list_persons.html',locals())
+    else:
+        return render(request, 'login.html')
 
 def complete(request):
     if 'account' in request.session:
@@ -79,9 +82,12 @@ def complete(request):
         return render(request, 'login.html')
 
 def list_persons(request):
-    persons = participate.objects.all()
-    num=persons.count()
-    return render(request, 'list_persons.html', {'persons': persons,'num':num})
+    if 'account' in request.session:
+        persons = participate.objects.all()
+        num=persons.count()
+        return render(request, 'list_persons.html', {'persons': persons,'num':num})
+    else:
+        return render(request, 'login.html')
 
 def delete_person(request, person_id):
     person = participate.objects.get(id=person_id)
