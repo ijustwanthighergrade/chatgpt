@@ -15,7 +15,7 @@ class member(models.Model):
     fb_account=models.CharField('fb帳號',max_length=20,null=True)
     name=models.CharField('姓名',max_length=20,null=False)
     phone=models.CharField('電話',max_length=20,null=False)
-    Email=models.CharField('信箱',max_length=40,null=False,primary_key=True,default=0)
+    Email=models.CharField('信箱',max_length=40,null=False,primary_key=True)
     createdate=models.DateTimeField('創立日期',max_length=30,default=timezone.now)
 
 
