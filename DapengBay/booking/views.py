@@ -3,9 +3,12 @@ from django.shortcuts import render,redirect
 
 from django.shortcuts import render, redirect
 import requests
-
+from django.contrib import messages
 from booking.models import member
 from booking.models import sign_in
+from booking.models import travel
+from booking.models import breakfast
+from booking.models import Dinner
 from .models import participate
 
 def login(request):
@@ -45,22 +48,32 @@ def register(request):
                 sign_in.objects.create(account=email,password=password)
                 member.objects.create(Email=email,phone=phone,name=username)
                 return render(request, 'login.html')
+    else:
+        return render(request, 'register.html')
 
 
 
 def add_person(request):
-    if participate.objects.count() >= 6:
-        return render(request, 'exceed.html')
-    if request.method == "GET":
-            name = request.GET.get('name')
-            mid = request.GET.get('mid')
-            birth = request.GET.get('birthday')
-            insurance = request.GET.get('insurance_status')
-            new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
-            new_person.save()
-            persons = participate.objects.all()
-            num=participate.objects.count()
-    return render(request, 'list_persons.html',locals())
+    if 'account' in request.session:
+        if participate.objects.count() >= 6:
+            return render(request, 'exceed.html')
+        if request.method == "GET":
+                message = ''
+                name = request.GET.get('name')
+                mid = request.GET.get('mid')
+                birth = request.GET.get('birthday')
+                insurance = request.GET.get('insurance_status')
+                if participate.objects.filter(MID=mid).exists():
+                    message = '身分證已存在，請輸入不同的身分證。'
+                    return redirect('list_persons')
+                else:
+                    new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
+                    new_person.save()
+                persons = participate.objects.all()
+                num=participate.objects.count()
+        return render(request, 'list_persons.html',locals())
+    else:
+        return render(request, 'login.html')
 
 def complete(request):
     if 'account' in request.session:
@@ -71,17 +84,33 @@ def complete(request):
         return render(request, 'login.html')
 
 def list_persons(request):
-    persons = participate.objects.all()
-    return render(request, 'list_persons.html', {'persons': persons})
+    if 'account' in request.session:
+        persons = participate.objects.all()
+        num=persons.count()
+        return render(request, 'list_persons.html', {'persons': persons,'num':num})
+    else:
+        return render(request, 'login.html')
 
 def delete_person(request, person_id):
     person = participate.objects.get(id=person_id)
     person.delete()
     return redirect('list_persons')
+def update_person(request):
+    if request.method == "GET":
+        name = request.GET.get('name')
+        mid = request.GET.get('mid')
+        birthday = request.GET.get('birthday')
+        insurance_status = request.GET.get('insurance_status')
 
-def edit1(request):
-    member = member.objects.get(account=id)
-    return render(request, 'edit.html', {'member': member})
+        person = participate.objects.get(MID=mid)
+        person.Name = name
+        person.MID = mid
+        person.birthday = birthday
+        person.insurance_status = insurance_status
+        person.save()
+
+    return redirect('list_persons')
+
 
 def home(request):
     if 'account' in request.session:
@@ -98,4 +127,14 @@ def logout(request):
     else:
         return render(request, 'login.html')
     
-
+def edit1(request):
+    amember=""
+    atravel=""
+    if 'account' in request.session:
+        id = request.session['account']
+        if request.method == "GET":
+            amember = member.objects.get(Email=id)
+            atravel = travel.objects.get(id=0)
+        return render(request, 'edit.html', {'amember': amember,'atravel': atravel})
+    else:
+        return render(request, 'login.html')

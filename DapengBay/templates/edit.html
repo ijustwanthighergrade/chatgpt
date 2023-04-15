@@ -25,22 +25,27 @@
       a:hover {
         background-color: lightgrey;
       }
+      
     </style>
   </head>
   <body>
     <div class="container">
-        {{ member.account }}
-
+    <div class="div1">
+        會員:{{ amember.name }}<br>
+        旅遊日期:{{ atravel.travel_date }}
+    </div>
       <h2>參加人員</h2>
-      <a href="#" class="edit">編輯</a>
+      <a href="http://127.0.0.1:8000/list" class="edit">編輯</a>
+      已預定：{{ atravel.total_number }} 人
+
       <br>
       <h2>預定早餐</h2>
       <a href="#" class="edit">編輯</a>
       <br>
       <h2>預定晚餐</h2>
       <a href="#" class="edit">編輯</a>
-      <a href="#">付款</a>
-      <a href="#">取消</a>
+      <a href="http://127.0.0.1:8000/complete/">付款</a>
+      <a href="http://127.0.0.1:8000/home/">取消</a>
     </div>
   </body>
 </html>
