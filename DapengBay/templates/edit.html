@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>編輯</title>
+    <style>
+      body {
+        background-color: #BFEFFF;
+        text-align: center;
+      }
+      .container {
+        border: 2px solid black;
+        box-shadow: 5px 5px 5px grey;
+        display: inline-block;
+        margin: 20px;
+        padding: 20px;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+        border: 2px solid black;
+        padding: 5px 10px;
+        box-shadow: 3px 3px 3px grey;
+        margin: 5px;
+      }
+      a:hover {
+        background-color: lightgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        {{ member.account }}
+
+      <h2>參加人員</h2>
+      <a href="#" class="edit">編輯</a>
+      <br>
+      <h2>預定早餐</h2>
+      <a href="#" class="edit">編輯</a>
+      <br>
+      <h2>預定晚餐</h2>
+      <a href="#" class="edit">編輯</a>
+      <a href="#">付款</a>
+      <a href="#">取消</a>
+    </div>
+  </body>
+</html>
