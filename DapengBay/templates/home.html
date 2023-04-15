@@ -147,22 +147,8 @@ a:hover, a:focus {
 			<button onclick="location.href='http://127.0.0.1:8000/logout'" class="logout-btn">Log-Out</button>
 		</div>
     <form action="/predict" method="post">
-        <div class="calendar">
-            <div class="month">
-                <button id="prev-month-btn">←</button>
-                <span id="current-month-year"></span>
-                <button id="next-month-btn">→</button>
-            </div>
-            <div class="days">
-                <div class="day">Sun</div>
-                <div class="day">Mon</div>
-                <div class="day">Tue</div>
-                <div class="day">Wed</div>
-                <div class="day">Thu</div>
-                <div class="day">Fri</div>
-                <div class="day">Sat</div>
-            </div>
-        </div>
+      選擇日期：　
+    <input type="date" id="select-date">
 		<div class="sidebar">
 			<div class="detail">Detail：<br>旅程名稱：帆船快樂遊</div>
 				<div class="people">人員名單</div>
@@ -170,9 +156,9 @@ a:hover, a:focus {
 				<div class="dinner">晚餐</div>
 		</div>
 		<div class="footer">
-			<div class="member">會員編號</div>
-			<input type="submit" class="order-btn" name="order" value="order">
-      <button class="edit-btn"><a>Edit</a></button>
+			<div class="member">{{會員編號}}</div>
+      <input type="submit" class="order-btn" name="travel" value="下訂" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
+      <input type="button" class="edit-btn" name="edit" value="edit" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
 		</div>
   </form>
 	</div>
