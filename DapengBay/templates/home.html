@@ -146,7 +146,7 @@ a:hover, a:focus {
 			<div>前台預訂</div>
 			<button onclick="location.href='http://127.0.0.1:8000/logout'" class="logout-btn">Log-Out</button>
 		</div>
-    <form action="/predict" method="post">
+    <form action="/save_travel" method="post">
       選擇日期：
         {% csrf_token %}
         <input type="date" id="date_input" name="date_input">

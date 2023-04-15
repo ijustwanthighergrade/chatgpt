@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>商品列表</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            background-color:  #FFD2D2;
+            color: black;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        #order-form {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item {
+            margin-bottom: 20px;
+        }
+
+        .breakfast_items, .item-quantity, #add-item, input[type="submit"] {
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        #add-item, input[type="submit"] {
+            background-color:  #FFD2D2;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #add-item:hover, input[type="submit"]:hover {
+            background-color: #FFD2D2;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>商品列表</h1>
+    <form method="post" id="order-form">
+        <div id="items">
+            <div class="menu-item">
+                <label for="item1">選擇商品：</label>
+                <select class="breakfast_items" name="breakfast_items">
+                    <option value="">請選擇</option>
+                    {% for item in items %}
+                    <option value="{{ item.dinner_name }}" data-price="{{ item.dinner_price }}">{{ item.dinner_name }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>單價：</label>
+                <span class="item-price">0元</span>
+                <br>
+                <label>選擇數量：</label>
+                <input type="number" class="item-quantity" name="quantity[]" min="0" max="10" value="0">
+                <br><br>
+            </div>
+        </div>
+        <button type="button" id="add-item">新增商品</button>
+        <br><br>
+        <div class="total">總金額：0元</div>
+        <br>
+        <input type="submit" value="結帳">
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            var order_items = {};
+
+            function updateTotal() {
+                var total = 0;
+                Object.keys(order_items).forEach(function (key) {
+                    var item_price = order_items[key]['item_price'];
+                    var item_quantity = order_items[key]['item_quantity'];
+                    var subtotal = item_price * item_quantity;
+                    total += subtotal;
+                });
+                $('.total').text('總金額：' + Math.max(0, total) + '元');
+            }
+
+            function onBreakfastItemsChange() {
+                var price = $(this).find(':selected').data('price');
+                $(this).closest('.menu-item').find('.item-price').text(price + '元');
+                var item = $(this).val();
+                var quantity = parseInt($(this).closest('.menu-item').find('.item-quantity').val());
+                order_items[item] = {
+                    'item_price': price,
+                    'item_quantity': quantity
+                };
+                updateTotal();
+            }
+
+            function onItemQuantityChange() {
+                var item = $(this).closest('.menu-item').find('.breakfast_items').val();
+                var price = parseInt($(this).closest('.menu-item').find('.item-price').text().replace("元", ""));
+                var quantity = parseInt($(this).val());
+                order_items[item] = {
+                    'item_price': price,
+                    'item_quantity': quantity
+                };
+                updateTotal();
+            }
+
+            $('#items').on('change', '.breakfast_items', onBreakfastItemsChange);
+            $('#items').on('change', '.item-quantity', onItemQuantityChange);
+
+            $('#add-item').on('click', function() {
+                var newItem = $('#items .menu-item:first').clone();
+                newItem.find('.item-price').text('0元');
+                newItem.find('.item-quantity').val(0);
+                newItem.appendTo('#items');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -56,6 +56,9 @@ class Dinner(models.Model):
     def __str__(self):
         return self.dinner_id
     
+
+
+    
 class breakfast_shop(models.Model):
     breakfast_items=models.CharField('早餐品項',max_length=10,null=False,primary_key=True)
     breakfast_name=models.CharField('早餐名稱',max_length=10,null=False)
