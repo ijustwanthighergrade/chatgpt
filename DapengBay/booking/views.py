@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render,redirect
 # Create your views here.s
 
@@ -151,7 +150,6 @@ def order(request):
         # ...
         # 將總金額傳遞給HTML模板
         return render(request, 'order.html', {'items': items, 'total_price': total_price})
-=======
 from django.shortcuts import render,redirect
 # Create your views here.s
 
@@ -308,4 +306,3 @@ def delete_edit(request):
     dinner_de = Dinner.objects.all()
     dinner_de.delete()
     return redirect('edit')
->>>>>>> 8604db3eeeef98dee67551755dc46416ed7ceda6
