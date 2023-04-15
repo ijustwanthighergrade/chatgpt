@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from .models import participate
-from booking.models import 
+
 
 def login(request):
     if request.method == 'POST':
