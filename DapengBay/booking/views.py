@@ -18,7 +18,7 @@ def login(request):
         if sign_in.objects.filter(account = username).exists():
             if sign_in.objects.filter(password = password):
                 request.session['account'] = username
-                return redirect('home') 
+                return redirect('complete') 
             #要改成首頁
             else:
                 return render(request, 'login.html', {'error': '密碼錯誤'})
@@ -27,7 +27,7 @@ def login(request):
             return render(request, 'register.html', {'error': '沒有此帳號，請註冊或是登入其他帳號'})
     else:
         # GET 請求顯示登錄表單
-        return render(request, 'login.html')
+        return render(request, 'complete.html')
 
 def register(request):
     error=""
