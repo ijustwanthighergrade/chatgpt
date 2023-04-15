@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 
 from django.shortcuts import render, redirect
 import requests
-
+from django.contrib import messages
 from booking.models import member
 from booking.models import sign_in
 from .models import participate
@@ -39,21 +39,42 @@ def add_person(request):
     if participate.objects.count() >= 6:
         return render(request, 'exceed.html')
     if request.method == "GET":
+            message = ''
             name = request.GET.get('name')
             mid = request.GET.get('mid')
             birth = request.GET.get('birthday')
             insurance = request.GET.get('insurance_status')
-            new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
-            new_person.save()
+            if participate.objects.filter(MID=mid).exists():
+                message = '身分證已存在，請輸入不同的身分證。'
+                return redirect('list_persons')
+            else:
+                new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
+                new_person.save()
             persons = participate.objects.all()
             num=participate.objects.count()
     return render(request, 'list_persons.html',locals())
 
 def list_persons(request):
     persons = participate.objects.all()
-    return render(request, 'list_persons.html', {'persons': persons})
+    num=persons.count()
+    return render(request, 'list_persons.html', {'persons': persons,'num':num})
 
 def delete_person(request, person_id):
     person = participate.objects.get(id=person_id)
     person.delete()
+    return redirect('list_persons')
+def update_person(request):
+    if request.method == "GET":
+        name = request.GET.get('name')
+        mid = request.GET.get('mid')
+        birthday = request.GET.get('birthday')
+        insurance_status = request.GET.get('insurance_status')
+
+        person = participate.objects.get(MID=mid)
+        person.Name = name
+        person.MID = mid
+        person.birthday = birthday
+        person.insurance_status = insurance_status
+        person.save()
+
     return redirect('list_persons')

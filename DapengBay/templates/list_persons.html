@@ -34,7 +34,7 @@
       <hr>
 
       <h1>參加名單</h1>
-      <h1>目前共有{{num}}人參加</h1>
+      <h3>目前共有{{num}}人參加</h1>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -47,23 +47,30 @@
         </thead>
         <tbody>
           {% for p in persons %}
-      <tr>
-        <td>{{ p.Name }}</td>
-        <td>{{ p.MID }}</td>
-        <td>{{ p.birthday }}</td>
-        <td>{{ p.insurance_status }}</td>
-        <td>
-          <form method="POST" action="{% url 'delete_person' p.id %}">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-danger" value="刪除">
-          </form>
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="5">No data</td>
-      </tr>
-      {% endfor %}
+          <tr>
+            <form method="GET" action="{% url 'update_person' %}">
+              <td><input type='text' value='{{ p.Name }}' name='name'></td>
+              <td>{{ p.MID }}</td>
+              <td><input type="date" class="form-control" value='{{ p.birthday|date:'Y-m-d' }}' id="birthday" name="birthday" required></td>
+              <td>
+                <select class="form-control" id="insurance_status" name="insurance_status">
+                  <option value="已投保" {% if p.insurance_status == '已投保' %} selected {% endif %}>Yes</option>
+                  <option value="未投保" {% if p.insurance_status == '未投保' %} selected {% endif %}>No</option>
+                </select>
+              </td>
+              <td>
+                {% csrf_token %}
+                <input type="hidden" name="mid" value='{{p.MID}}'>
+                <a href="{% url 'delete_person' p.id %}" class="btn btn-danger">刪除</a>
+                <input type="submit" class="btn btn-primary" value="修改">
+              </td>
+            </form>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">No data</td>
+          </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>
