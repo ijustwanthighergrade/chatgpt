@@ -78,6 +78,20 @@ def delete_person(request, person_id):
     person = participate.objects.get(id=person_id)
     person.delete()
     return redirect('list_persons')
+
 def edit1(request):
     member = member.objects.get(account=id)
     return render(request, 'edit.html', {'member': member})
+
+def home(request):
+    if 'account' in request.session:
+        if request.method == "GET":
+            id = request.GET.get('id')
+        return render(request, 'home.html',locals())
+    else:
+        return render(request, 'login.html')
+    
+def logout(request):
+    del request.session['account']
+
+    return render(request, 'login.html')
