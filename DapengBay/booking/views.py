@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
-
+from .models import participate
 from booking.models import 
 
 def login(request):
@@ -20,3 +20,20 @@ def login(request):
         # GET 請求顯示登錄表單
         return render(request, 'login.html')
 
+def add_person(request):
+    if participate.objects.count() >= 6:
+        return render(request, 'exceed.html')
+    if request.method == "GET":
+            name = request.GET.get('name')
+            mid = request.GET.get('mid')
+            birth = request.GET.get('birthday')
+            insurance = request.GET.get('insurance_status')
+            new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
+            new_person.save()
+            persons = participate.objects.all()
+    return render(request, 'list_persons.html',locals())
+
+def delete_person(request, person_id):
+    person = participate.objects.get(id=person_id)
+    person.delete()
+    return redirect('list_persons')
