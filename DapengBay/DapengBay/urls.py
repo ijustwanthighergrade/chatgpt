@@ -32,7 +32,7 @@ from booking.views import add_person, delete_person
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include(book_urls)),
-    path('list', add_person, name='list_persons'),
+    
     
 ]
 
