@@ -34,6 +34,7 @@ def register(request):
     password=request.POST['password']
     password=request.POST['password']
     password=request.POST['password']
+    
 def add_person(request):
     if participate.objects.count() >= 6:
         return render(request, 'exceed.html')
