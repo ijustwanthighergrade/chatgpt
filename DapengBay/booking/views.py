@@ -30,7 +30,7 @@ def login(request):
             return render(request, 'register.html', {'error': '沒有此帳號，請註冊或是登入其他帳號'})
     else:
         # GET 請求顯示登錄表單
-        return render(request, 'complete.html')
+        return render(request, 'login.html')
 
 def register(request):
     error=""
