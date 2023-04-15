@@ -22,7 +22,8 @@
     }
 
     /* Style the submit button */
-    input[type="submit"] {
+    input[type="submit"],
+        input[type="button"]  {
       background-color: #4CAF50; /* Set the background color */
       color: white; /* Set the text color */
       padding: 10px 20px; /* Add some padding */
@@ -54,7 +55,8 @@
       }
 
       /* Add some margin to the submit button */
-      input[type="submit"] {
+      input[type="submit"],
+        input[type="button"]  {
         margin-top: 10px;
       }
     }
@@ -69,6 +71,7 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">
     <input type="submit" value="Login">
+    <input type="button" value="Register" onclick="window.location.href='http://127.0.0.1:8000/register/'">
   </form>
 </body>
 </html>
