@@ -6,7 +6,7 @@ import requests
 
 from booking.models import member
 from booking.models import sign_in
-from .models import participate
+from .models import participate,dinner_shop
 
 def login(request):
     if request.method == 'POST':
@@ -98,3 +98,55 @@ def logout(request):
     else:
         return render(request, 'login.html')
     
+
+
+def dinner(request):
+    items = dinner_shop.objects.all()
+    return render(request, 'dinner.html', {'items': items})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def break_view(request):
+    return render(request, 'break.html')
+
+
+
+def breakfast_items(request):
+    items = breakfast_shop.objects.all()
+    return render(request, 'break.html', {'items':items})
+
+
+
+def order(request):
+    if request.method == 'POST':
+        items = []
+        total_price = 0
+        counter=0
+        for i in range(1, counter+1):
+            item_name = request.POST.get('breakfast_items')
+            item_price = request.POST.get('price' + str(i))
+            item_quantity = request.POST.get('quantity' + str(i))
+            item_total = int(item_price) * int(item_quantity)
+            total_price += item_total
+            items.append({
+                'name': item_name,
+                'price': item_price,
+                'quantity': item_quantity,
+                'total': item_total
+            })
+        # 將訂單儲存到資料庫中
+        # ...
+        # 將總金額傳遞給HTML模板
+        return render(request, 'order.html', {'items': items, 'total_price': total_price})

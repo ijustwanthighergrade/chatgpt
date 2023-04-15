@@ -28,6 +28,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('complete/', views.complete, name='complete'),
     path('logout/', views.logout, name='logout'),
+    path('dinner/', views.dinner, name='dinner'),
+    #path('products/', product_list, name='product_list'),
+    path('break/', views.breakfast_items, name='break'),
 ]
 
 
