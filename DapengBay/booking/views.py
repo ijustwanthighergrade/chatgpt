@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from django.shortcuts import render,redirect
 # Create your views here.s
 
@@ -157,6 +158,8 @@ def delete_edit(request):
     dinner_de.delete()
     return redirect('edit')
 =======
+=======
+>>>>>>> 7d6605a1793ed3a910c0552da53e317f250f990a
 =======
 >>>>>>> 7d6605a1793ed3a910c0552da53e317f250f990a
 from django.shortcuts import render,redirect
@@ -624,6 +627,9 @@ def delete_edit(request):
     dinner_de.delete()
     return redirect('edit')
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 7d6605a1793ed3a910c0552da53e317f250f990a
+=======
 >>>>>>> 7d6605a1793ed3a910c0552da53e317f250f990a
 =======
 >>>>>>> 7d6605a1793ed3a910c0552da53e317f250f990a
