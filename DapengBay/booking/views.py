@@ -92,6 +92,8 @@ def home(request):
         return render(request, 'login.html')
     
 def logout(request):
-    del request.session['account']
-
-    return render(request, 'login.html')
+    if 'account' in request.session:
+        del request.session['account']
+    else:
+        return render(request, 'login.html')
+    
