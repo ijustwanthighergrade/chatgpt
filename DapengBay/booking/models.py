@@ -6,16 +6,15 @@ from django.shortcuts import render, redirect
 # Create your models here.
 
 class sign_in(models.Model):
-    id = models.CharField(primary_key=True,default=0)
     account=models.CharField('帳號',max_length=20,null=False)
     password=models.CharField('密碼',max_length=20,null=False)
 
 class member(models.Model):
-    id = models.AutoField(primary_key=True,default=0)
+    account=models.CharField('帳號',max_length=20,null=False,primary_key=True)
     sign_in_type=models.CharField('類別',max_length=20,null=False)
     line_account=models.CharField('line帳號',max_length=20,null=True)
     fb_account=models.CharField('fb帳號',max_length=20,null=True)
-    name=models.CharField('姓名',max_length=20,null=False,primary_key=True)
+    name=models.CharField('姓名',max_length=20,null=False)
     phone=models.CharField('電話',max_length=20,null=False)
     Email=models.CharField('信箱',max_length=40,null=True)
     createdate=models.DateTimeField('創立日期',max_length=30,default=timezone.now)

@@ -60,8 +60,8 @@
     }
   </style>
 </head>
-<body>
-  <form action="login.php" method="POST">
+<body> {% csrf_token %}
+  <form action="{% url 'login'%}" method="POST">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <label for="password">Password:</label>
