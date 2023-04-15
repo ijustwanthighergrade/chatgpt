@@ -60,9 +60,11 @@
     }
   </style>
 </head>
-<body> {% csrf_token %}
-  <form action="{% url 'login'%}" method="POST">
-    <label for="username">Username:</label>
+<body> 
+    {% csrf_token %}
+    {{error}}
+  <form action="/login/" method="POST">
+    <label for="username">Acoount:</label>
     <input type="text" id="username" name="username">
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>旅程檔</title>
+	<style>
+        body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0 20px;
+			box-sizing: border-box;
+			background-color: #f1f1f1;
+		}
+		.container {
+			max-width: 800px;
+			width: 100%;
+			background-color: white;
+			padding: 20px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+		button {
+			margin-top: 16px;
+			padding: 8px 16px;
+			font-size: 16px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+        .btn-back, .btn-confirm {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-back:hover, .btn-confirm:hover {
+        background-color: #0062cc;
+        }
+
+	</style>
+</head>
+<body>
+	<div class="container">
+	<h1>旅程檔</h1>
+    <table>
+		<tr>
+			<th>訂單編號</th>
+			<td>E2流水號</td>
+		</tr>
+		<tr>
+			<th>會員編號</th>
+			<td>E1</td>
+		</tr>
+		<tr>
+			<th>日期</th>
+			<td>西元年月日</td>
+		</tr>
+		<tr>
+			<th>狀態</th>
+			<td>[0:預約中；1:已完成付款；2 :預約已取消； 3:訂單已取消]</td>
+		</tr>
+		<tr>
+			<th>售價</th>
+			<td>目前為15000元</td>
+		</tr>
+	</table>
+	<h2>早餐</h2>
+	<table>
+		<tr>
+			<th>早餐訂單編號</th>
+			<td>E3流水號</td>
+		</tr>
+		<tr>
+			<th>早餐品項</th>
+			<td>E4流水號</td>
+		</tr>
+		<tr>
+			<th>數量</th>
+			<td>Integer</td>
+		</tr>
+		<tr>
+			<th>售價</th>
+			<td>Integer</td>
+		</tr>
+	</table>
+	
+	<h2>晚餐</h2>
+	<table>
+		<tr>
+			<th>晚餐訂單編號</th>
+			<td>E5流水號</td>
+		</tr>
+		<tr>
+			<th>訂單編號</th>
+			<td>E2流水號</td>
+		</tr>
+		<tr>
+			<th>晚餐品項*</th>
+			<td>E6流水號</td>
+		</tr>
+		<tr>
+			<th>數量</th>
+			<td>Integer</td>
+		</tr>
+		<tr>
+			<th>售價</th>
+			<td>Integer</td>
+		</tr>
+	</table>
+
+	<h2>參加人</h2>
+	<table>
+		<tr>
+			<th>人員編號</th>
+			<td>E2流水號</td>
+		</tr>
+		<tr>
+			<th>姓名</th>
+			<td>Char</td>
+		</tr>
+		<tr>
+			<th>身分證字號</th>
+			<td>E92，身分證號</td>
+		</tr>
+		<tr>
+			<th>保險狀態</th>
+			<td>E92，身分證號</td>
+		</tr>
+    </table>
+        <button class="btn-back" onclick="window.history.back()">回上一頁</button>
+        <button class="btn-confirm" onclick="confirmOrder()">確認訂單</button>
+	</div>
+        
