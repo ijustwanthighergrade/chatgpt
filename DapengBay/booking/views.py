@@ -48,6 +48,8 @@ def register(request):
                 sign_in.objects.create(account=email,password=password)
                 member.objects.create(Email=email,phone=phone,name=username)
                 return render(request, 'login.html')
+    else:
+        return render(request, 'register.html')
 
 
 
