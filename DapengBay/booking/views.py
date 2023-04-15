@@ -18,7 +18,7 @@ def login(request):
         if sign_in.objects.filter(account = username).exists():
             if sign_in.objects.filter(password = password):
                 request.session['account'] = username
-                return redirect('complete') 
+                return redirect('home') 
             #要改成首頁
             else:
                 return render(request, 'login.html', {'error': '密碼錯誤'})
@@ -94,6 +94,7 @@ def home(request):
 def logout(request):
     if 'account' in request.session:
         del request.session['account']
+        return render(request, 'login.html')
     else:
         return render(request, 'login.html')
     
