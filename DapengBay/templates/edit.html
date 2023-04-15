@@ -25,12 +25,15 @@
       a:hover {
         background-color: lightgrey;
       }
+      
     </style>
   </head>
   <body>
     <div class="container">
+    <div class="div1">
         會員:{{ amember.name }}<br>
         旅遊日期:{{ atravel.travel_date }}
+    </div>
       <h2>參加人員</h2>
       <a href="http://127.0.0.1:8000/list" class="edit">編輯</a>
       已預定：{{ atravel.total_number }} 人
