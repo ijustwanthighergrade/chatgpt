@@ -128,6 +128,16 @@
 			font-size: 16px;
 			margin-left: 10px;
     }
+    a {
+  text-decoration: none; /* 移除底線 */
+  color: inherit; /* 繼承文字顏色 */
+}
+
+a:hover, a:focus {
+  color: inherit; /* 繼承文字顏色，保持不變色 */
+  outline: none; /* 移除聚焦時的默認外框 */
+}
+
 	</style>
 </head>
 <body>
@@ -136,6 +146,7 @@
 			<div>前台預訂</div>
 			<button onclick="location.href='http://127.0.0.1:8000/logout'" class="logout-btn">Log-Out</button>
 		</div>
+    <form action="/predict" method="post">
         <div class="calendar">
             <div class="month">
                 <button id="prev-month-btn">←</button>
@@ -161,8 +172,9 @@
 		<div class="footer">
 			<div class="member">會員編號</div>
 			<input type="submit" class="order-btn" name="order" value="order">
-      <input type="button" class="edit-btn" value="Edit">
+      <button class="edit-btn"><a>Edit</a></button>
 		</div>
+  </form>
 	</div>
     <script>
         const currentMonthYearElem = document.getElementById('current-month-year');
