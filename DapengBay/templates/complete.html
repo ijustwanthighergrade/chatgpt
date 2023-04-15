@@ -72,16 +72,12 @@
 			<td>E2流水號</td>
 		</tr>
 		<tr>
-			<th>會員編號</th>
+			<th>會員帳號</th>
 			<td>E1</td>
 		</tr>
 		<tr>
 			<th>日期</th>
 			<td>西元年月日</td>
-		</tr>
-		<tr>
-			<th>狀態</th>
-			<td>[0:預約中；1:已完成付款；2 :預約已取消； 3:訂單已取消]</td>
 		</tr>
 		<tr>
 			<th>售價</th>
@@ -115,10 +111,6 @@
 			<td>E5流水號</td>
 		</tr>
 		<tr>
-			<th>訂單編號</th>
-			<td>E2流水號</td>
-		</tr>
-		<tr>
 			<th>晚餐品項*</th>
 			<td>E6流水號</td>
 		</tr>
@@ -133,6 +125,7 @@
 	</table>
 
 	<h2>參加人</h2>
+	{% for i in prob_list %}
 	<table>
 		<tr>
 			<th>人員編號</th>
@@ -151,6 +144,7 @@
 			<td>E92，身分證號</td>
 		</tr>
     </table>
+	{% endfor %}
         <button class="btn-back" onclick="window.history.back()">回上一頁</button>
         <button class="btn-confirm" onclick="confirmOrder()">確認訂單</button>
 	</div>

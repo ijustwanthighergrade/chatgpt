@@ -77,11 +77,13 @@ def add_person(request):
 
 def complete(request):
     if 'account' in request.session:
+        prob = participate.objects.filter(booking_number=0)
+        prob_list =list(prob.values())
         if request.method == "GET":
             id = request.GET.get('id')
         return render(request, 'complete.html',locals())
     else:
-        return render(request, 'login.html')
+        return render(request, 'login.html',{'prob_list':prob_list})
 
 def list_persons(request):
     if 'account' in request.session:
