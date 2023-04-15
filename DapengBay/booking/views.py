@@ -59,7 +59,12 @@ def add_person(request):
             new_person = participate(Name=name, MID=mid, insurance_status=insurance,birthday=birth)
             new_person.save()
             persons = participate.objects.all()
+            num=participate.objects.count()
     return render(request, 'list_persons.html',locals())
+
+def list_persons(request):
+    persons = participate.objects.all()
+    return render(request, 'list_persons.html', {'persons': persons})
 
 def delete_person(request, person_id):
     person = participate.objects.get(id=person_id)
