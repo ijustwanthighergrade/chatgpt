@@ -147,8 +147,10 @@ a:hover, a:focus {
 			<button onclick="location.href='http://127.0.0.1:8000/logout'" class="logout-btn">Log-Out</button>
 		</div>
     <form action="/predict" method="post">
-      選擇日期：　
-    <input type="date" id="select-date">
+      選擇日期：
+        {% csrf_token %}
+        <input type="date" id="date_input" name="date_input">
+        <p>你選擇的日期是：{{ selected_date }}</p>
 		<div class="sidebar">
 			<div class="detail">Detail：<br>旅程名稱：帆船快樂遊</div>
 				<div class="people">人員名單</div>
@@ -156,9 +158,9 @@ a:hover, a:focus {
 				<div class="dinner">晚餐</div>
 		</div>
 		<div class="footer">
-			<div class="member">{{會員編號}}</div>
-      <input type="submit" class="order-btn" name="travel" value="下訂" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
-      <input type="button" class="edit-btn" name="edit" value="edit" onclick="window.location.href='http://127.0.0.1:8000/edit/';">
+			<div class="member">會員編號</div>
+      <input type="submit" class="order-btn" name="travel" value="下訂">
+      <input type="button" class="edit-btn" name="edit" value="edit" onclick="window.location.href='http://127.0.0.1:8000/edit/'">
 		</div>
   </form>
 	</div>
@@ -258,6 +260,7 @@ a:hover, a:focus {
 
         
 </script>
+{{serial_no}}
 </body>
 </html>
 

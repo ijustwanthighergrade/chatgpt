@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 # Create your models here.
 
 class sign_in(models.Model):
-    account=models.CharField('帳號',max_length=20,null=False,primary_key=True)
+    account=models.CharField('帳號',max_length=20,null=False,primary_key=True,default=0)
     password=models.CharField('密碼',max_length=20,null=False)
 
 class member(models.Model):
