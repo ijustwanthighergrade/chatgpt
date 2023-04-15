@@ -1,51 +1,88 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>編輯</title>
-    <style>
-      body {
-        background-color: #BFEFFF;
-        text-align: center;
-      }
-      .container {
-        border: 2px solid black;
-        box-shadow: 5px 5px 5px grey;
-        display: inline-block;
-        margin: 20px;
-        padding: 20px;
-      }
-      a {
-        color: black;
-        text-decoration: none;
-        border: 2px solid black;
-        padding: 5px 10px;
-        box-shadow: 3px 3px 3px grey;
-        margin: 5px;
-      }
-      a:hover {
-        background-color: lightgrey;
-      }
-      
-    </style>
-  </head>
-  <body>
-    <div class="container">
-    <div class="div1">
-        會員:{{ amember.name }}<br>
-        旅遊日期:{{ atravel.travel_date }}
-    </div>
-      <h2>參加人員</h2>
-      <a href="http://127.0.0.1:8000/list" class="edit">編輯</a>
-      已預定：{{ atravel.total_number }} 人
+<head>
+	<title>編輯</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		body {
+			text-align: center;
+		}
+		.container {
+			border: 2px solid black;
+			box-shadow: 5px 5px 5px grey;
+			display: inline-block;
+			margin: 20px;
+			padding: 20px;
+		}
+		a {
+			color: black;
+			text-decoration: none;
+			border: 2px solid black;
+			padding: 5px 10px;
+			box-shadow: 3px 3px 3px grey;
+			margin: 5px;
+		}
+		a:hover {
+			background-color: lightgrey;
+		}
+		.div1{
+			text-align: right;
+		}
+    div{
+      background-color: #e4d6d6;
 
-      <br>
-      <h2>預定早餐</h2>
-      <a href="#" class="edit">編輯</a>
-      <br>
-      <h2>預定晚餐</h2>
-      <a href="#" class="edit">編輯</a>
-      <a href="http://127.0.0.1:8000/complete/">付款</a>
-      <a href="http://127.0.0.1:8000/home/">取消</a>
-    </div>
-  </body>
+    }
+	</style>
+</head>
+<body>
+	<div class="container">
+    <h1>帆船</h1>
+		<div class="div1">
+			旅遊日期: {{ atravel.travel_date }}<br>
+			會員: {{ amember.name }}
+		</div>
+		<h2>參加人員</h2>
+		<a href="http://127.0.0.1:8000/list" class="edit">編輯</a>
+		<p>已預定：{{ num }} 人</p>
+		<div class="container">
+			<h2 class="text-center">人員資料</h2>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>姓名</th>
+							<th>是否投保</th>
+						</tr>
+					</thead>
+          {% for a in aparticipate %}
+					<tbody>
+						<tr>
+							<td> {{ a.Name }}</td>
+							<td>{{ a.insurance_status }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<br>
+		<h2>預定早餐</h2>
+		<a href="#" class="edit">編輯</a>
+		<br>
+		<h2>預定晚餐</h2>
+		<a href="#" class="edit">編輯</a>
+		<a href="http://127.0.0.1:8000/complete/">付款</a>
+		<a href="{% url 'delete_edit' %}">刪除</a></a>	<button onclick="redirectToPage()">跳转到页面2</button>
+
+	</div>
+  <script>
+		function redirectToPage() {
+			window.location.href = "page2.html";
+		}
+	</script>
+</body>
 </html>
