@@ -1,1 +1,1 @@
-# chatgpt
+# 2023年聯新杯Chat GPT程式開發黑客松
